@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Add Blog</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css"
+    />
+    <style>
+      :root {
+        color-scheme: light dark;
+      }
+      body.dark-mode {
+        background: #121212;
+        color: #e4e4e7;
+      }
+      body.dark-mode .bg-white {
+        background-color: #1e1e2f;
+      }
+      body.dark-mode .text-gray-800 {
+        color: #f4f4f5;
+      }
+      body.dark-mode .text-gray-600 {
+        color: #9ca3af;
+      }
+      body.dark-mode .border-gray-300 {
+        border-color: #3b3b4d;
+      }
+      body.dark-mode .bg-gray-50 {
+        background-color: #262626;
+      }
+      body.dark-mode .hover\:bg-gray-100:hover {
+        background-color: #333333;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-gradient-to-r from-blue-500 to-purple-600 dark-mode flex justify-center items-center min-h-screen"
+  >
+    <div
+      class="bg-white shadow-2xl rounded-2xl p-8 w-full max-w-4xl transform transition duration-500 hover:scale-105"
+    >
+      <div class="flex justify-center mb-6">
+        <img
+          src="https://via.placeholder.com/200"
+          alt="Placeholder Icon"
+          class="w-48 h-48 rounded-full shadow-lg"
+        />
+      </div>
+      <h1 class="text-4xl font-extrabold text-center text-gray-800 mb-6">
+        Create a Stunning Blog
+      </h1>
+      <p class="text-center text-gray-600 mb-8">
+        Share your thoughts with the world by filling out the form below.
+      </p>
+      <form action="/blog/addBlog" method="POST" enctype="multipart/form-data">
+        <div class="mb-6">
+          <label for="title" class="block text-lg font-medium text-gray-700"
+            >Title</label
+          >
+          <input
+            type="text"
+            id="title"
+            name="title"
+            class="mt-2 block w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 dark-mode:bg-gray-700 dark-mode:text-gray-200"
+            placeholder="Enter blog title"
+            required
+          />
+        </div>
+
+        <div class="mb-6">
+          <label for="body" class="block text-lg font-medium text-gray-700"
+            >Body</label
+          >
+          <textarea
+            id="body"
+            name="body"
+            rows="8"
+            class="mt-2 block w-full p-4 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50 dark-mode:bg-gray-700 dark-mode:text-gray-200"
+            placeholder="Write your blog content here..."
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-8">
+          <label
+            for="coverImage"
+            class="block text-lg font-medium text-gray-700"
+            >Cover Image</label
+          >
+          <div
+            class="mt-3 flex flex-col items-center justify-center border-2 border-dashed border-gray-300 rounded-lg p-8 bg-gray-50 hover:bg-gray-100 dark-mode:bg-gray-700 dark-mode:hover:bg-gray-600"
+          >
+            <input
+              type="file"
+              id="coverImage"
+              name="coverImage"
+              class="hidden"
+              accept="image/*"
+              required
+              onchange="previewImage(event)"
+            />
+            <label
+              for="coverImage"
+              class="cursor-pointer text-blue-500 font-semibold hover:underline dark-mode:text-blue-400"
+              >Click to upload an image</label
+            >
+            <img
+              id="imagePreview"
+              class="mt-4 w-64 h-64 object-cover rounded-lg hidden"
+              alt="Cover Preview"
+            />
+          </div>
+        </div>
+
+        <button
+          type="submit"
+          class="w-full bg-gradient-to-r from-green-400 to-blue-500 text-white font-bold py-4 px-6 rounded-lg shadow-lg hover:from-green-500 hover:to-blue-600 transform hover:-translate-y-1 transition duration-300"
+        >
+          Publish Blog
+        </button>
+      </form>
+    </div>
+
+    <script>
+      // Toggle dark mode if user has dark preference
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        document.body.classList.add("dark-mode");
+      }
+
+      // Preview uploaded image
+      function previewImage(event) {
+        const file = event.target.files[0];
+        const preview = document.getElementById("imagePreview");
+        if (file) {
+          const reader = new FileReader();
+          reader.onload = function (e) {
+            preview.src = e.target.result;
+            preview.classList.remove("hidden");
+          };
+          reader.readAsDataURL(file);
+        }
+      }
+    </script>
+  </body>
+</html>
